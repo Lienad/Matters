@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.daniel.matters.apis.ApiProvider;
-import com.daniel.matters.apis.MattersAdapter;
 import com.daniel.matters.apis.MattersResponse;
 
 import java.util.List;
