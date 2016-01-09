@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_matters"
-    tools:context="com.daniel.matters.MattersActivity">
+    tools:context=".activities.MattersActivity">
 
     <ListView
         android:id="@+id/matters_list"
