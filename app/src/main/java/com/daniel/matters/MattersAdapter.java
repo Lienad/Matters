@@ -1,4 +1,4 @@
-package com.daniel.matters.apis;
+package com.daniel.matters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,9 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
-import com.daniel.matters.Matter;
-import com.daniel.matters.R;
 
 import java.util.List;
 
