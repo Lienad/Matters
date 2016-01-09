@@ -24,11 +24,11 @@ import retrofit2.Callback;
 
 public class MattersActivity extends AppCompatActivity {
 
-    @Bind(R.id.matters_list)
-    ListView mattersListView;
-
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+
+    @Bind(R.id.matters_list)
+    ListView mattersListView;
 
     @SuppressWarnings("unused")
     @OnItemClick(R.id.matters_list) void showMatter(int position) {
@@ -52,19 +52,14 @@ public class MattersActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_matters, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -109,6 +104,7 @@ public class MattersActivity extends AppCompatActivity {
 
     private void openMatterDetails(Matter matter) {
         Intent intent = new Intent(this, MatterDetailsActivity.class);
+        intent.putExtra("matter", matter);
         startActivity(intent);
     }
 }
