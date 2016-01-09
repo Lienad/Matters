@@ -13,8 +13,9 @@
     tools:showIn="@layout/activity_matters"
     tools:context="com.daniel.matters.MattersActivity">
 
-    <TextView
-        android:text="Hello World!"
-        android:layout_width="wrap_content"
+    <ListView
+        android:id="@+id/matters_list"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
 </RelativeLayout>
