@@ -28,4 +28,5 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
     compile 'com.squareup.retrofit2:retrofit-converters:2.0.0-beta3'
+    compile 'com.jakewharton:butterknife:7.0.1'
 }

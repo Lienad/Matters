@@ -23,9 +23,6 @@ public class MattersAdapter extends ArrayAdapter<Matter> {
     @Bind(R.id.matter_id)
     TextView matterId;
 
-    @Bind(R.id.client_name)
-    TextView clientName;
-
     @Bind(R.id.matter_description)
     TextView matterDescription;
 
@@ -42,8 +39,9 @@ public class MattersAdapter extends ArrayAdapter<Matter> {
 
         ButterKnife.bind(this, convertView);
 
-        matterId.setText(Long.toString(matter.getId()));
-        clientName.setText(matter.getClientName());
+        String space = getContext().getResources().getString(R.string.matters_row_matter_id);
+
+        matterId.setText(String.format(space, matter.getId(), matter.getClientName()));
         matterDescription.setText(matter.getDescription());
 
         return convertView;
