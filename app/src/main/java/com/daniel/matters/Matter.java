@@ -40,6 +40,20 @@ public class Matter {
         String name;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getClientName() {
+        return client.name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+
+
 //    public class ActivityRate {
 //        long id;
 //        String created_at;

@@ -1,4 +1,6 @@
-package com.daniel.matters;
+package com.daniel.matters.apis;
+
+import com.daniel.matters.Matter;
 
 import java.util.List;
 

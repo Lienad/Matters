@@ -6,25 +6,38 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import com.daniel.matters.apis.ApiProvider;
+import com.daniel.matters.apis.MattersAdapter;
+import com.daniel.matters.apis.MattersResponse;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import retrofit2.Callback;
 
 public class MattersActivity extends AppCompatActivity {
 
+    @Bind(R.id.matters_list)
+    ListView mattersListView;
+
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+
+    MattersAdapter adapter;
     private List<Matter> matters;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matters);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
         getMattersAsync();
+
     }
 
     @Override
@@ -55,6 +68,7 @@ public class MattersActivity extends AppCompatActivity {
            public void onResponse(retrofit2.Response<MattersResponse> response) {
                if (response.body().matters != null) {
                    matters = response.body().matters;
+                   setupMattersList(response.body().matters);
                }
            }
 
@@ -63,6 +77,12 @@ public class MattersActivity extends AppCompatActivity {
                // TODO: handle the error
            }
        });
+    }
+
+    private void setupMattersList(List<Matter> matters) {
+        this.matters = matters;
+        adapter = new MattersAdapter(this, R.layout.row_matters, matters);
+        mattersListView.setAdapter(adapter);
     }
 
     private void getMattersAsync() {
