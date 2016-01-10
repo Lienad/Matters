@@ -3,16 +3,29 @@ package com.daniel.matters;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
+import com.raizlabs.android.dbflow.annotation.ModelContainer;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 /**
  * Created by dabraham on 1/8/16.
  */
-public class Matter implements Parcelable{
+@Table(database = MattersDatabase.class)
+public class Matter extends BaseModel implements Parcelable{
 
+    @PrimaryKey()
     long id;
+    @ForeignKey(saveForeignKeyModel = true)
     Client client;
     String display_number;
+    @Column
     String description;
+    @Column
     String status;
+    @Column
     String open_date;
     String close_date;
     String pending_date;
@@ -32,6 +45,9 @@ public class Matter implements Parcelable{
 
     //ActivityRate activity_rates;
 
+    public Matter() {
+
+    }
 
     protected Matter(Parcel in) {
         id = in.readLong();
@@ -73,7 +89,11 @@ public class Matter implements Parcelable{
     }
 
     public String getClientName() {
-        return client.name;
+        if (client != null) {
+            return client.name;
+        } else {
+            return "";
+        }
     }
 
     public String getDescription() {
@@ -117,6 +137,7 @@ public class Matter implements Parcelable{
         dest.writeParcelable(permission, 0);
     }
 
+
     public static class Permission implements Parcelable {
         long id;
         String url;
@@ -153,10 +174,18 @@ public class Matter implements Parcelable{
         }
     }
 
-    public static class Client implements Parcelable {
+    @ModelContainer
+    @Table(database = MattersDatabase.class)
+    public static class Client extends BaseModel implements Parcelable {
+        @PrimaryKey
         long id;
         String url;
+        @Column
         String name;
+
+        public Client() {
+
+        }
 
         protected Client(Parcel in) {
             id = in.readLong();
