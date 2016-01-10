@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -14,6 +15,10 @@ import com.daniel.matters.MattersAdapter;
 import com.daniel.matters.R;
 import com.daniel.matters.apis.ApiProvider;
 import com.daniel.matters.apis.MattersResponse;
+import com.raizlabs.android.dbflow.runtime.TransactionManager;
+import com.raizlabs.android.dbflow.runtime.transaction.SelectListTransaction;
+import com.raizlabs.android.dbflow.runtime.transaction.TransactionListenerAdapter;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.List;
 
@@ -37,7 +42,6 @@ public class MattersActivity extends AppCompatActivity {
     }
 
     MattersAdapter adapter;
-    private List<Matter> matters;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,22 +76,39 @@ public class MattersActivity extends AppCompatActivity {
            @Override
            public void onResponse(retrofit2.Response<MattersResponse> response) {
                if (response.body().matters != null) {
-                   matters = response.body().matters;
-                   setupMattersList(response.body().matters);
+                   List<Matter> matters = response.body().matters;
+                   setupMattersList(matters);
+                   saveMattersToDb(matters);
                }
            }
 
            @Override
            public void onFailure(Throwable t) {
+               Log.e("TAG", "error: " + t.getMessage());
                // TODO: handle the error
+               retrieveMattersFromDb();
            }
        });
     }
 
     private void setupMattersList(List<Matter> matters) {
-        this.matters = matters;
         adapter = new MattersAdapter(this, R.layout.row_matters, matters);
         mattersListView.setAdapter(adapter);
+    }
+
+    private void retrieveMattersFromDb() {
+        TransactionManager.getInstance().addTransaction(
+                new SelectListTransaction<>(new Select().from(Matter.class),
+                        new TransactionListenerAdapter<List<Matter>>() {
+                            @Override
+                            public void onResultReceived(List<Matter> matters) {
+                                setupMattersList(matters);
+                            }
+                        }));
+    }
+
+    private void saveMattersToDb(List<Matter> matters) {
+        TransactionManager.getInstance().saveOnSaveQueue(matters);
     }
 
     private void getMattersAsync() {
