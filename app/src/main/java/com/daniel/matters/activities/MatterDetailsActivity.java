@@ -1,6 +1,7 @@
 package com.daniel.matters.activities;
 
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -46,6 +47,7 @@ public class MatterDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         matter = getIntent().getParcelableExtra("matter");
         Log.e("TAG", "matter id: " + matter.getId());
@@ -62,9 +64,13 @@ public class MatterDetailsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
+        switch(id) {
+        case R.id.action_settings:
             return true;
-        }
+        case android.R.id.home:
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
+    }
 
         return super.onOptionsItemSelected(item);
     }
