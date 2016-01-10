@@ -19,3 +19,7 @@ Greek mytholigal characters was the them for the release version names.
 The Json seemed to cut off at the 8th item causing problems with some of the fields.
 The next step would be to figure out what was happening there,
 then to add support for the remaining Matter fields that were ignored.
+
+Lastly I have added one automated test.
+Espresso was used for this.
+With more time I would set up a mock server to get the matters, and would delete anything in the database before the test.
