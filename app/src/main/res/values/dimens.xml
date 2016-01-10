@@ -6,4 +6,9 @@
 
     <dimen name="row_padding">15dp</dimen>
     <dimen name="row_textsize">20sp</dimen>
+
+    <dimen name="matters_details_textsize">25sp</dimen>
+    <dimen name="matter_details_margin_top">30dp</dimen>
+    <dimen name="matter_details_margin_left">50dp</dimen>
+    <dimen name="matter_details_margin_left2">20dp</dimen>
 </resources>

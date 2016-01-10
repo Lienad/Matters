@@ -29,9 +29,6 @@ public class MatterDetailsActivity extends AppCompatActivity {
     @Bind(R.id.client_name)
     TextView clientName;
 
-    @Bind(R.id.matter_description)
-    TextView matterName;
-
     @Bind(R.id.matter_open_date)
     TextView matterOpenDate;
 
@@ -76,9 +73,9 @@ public class MatterDetailsActivity extends AppCompatActivity {
     }
 
     private void setFields() {
-        matterId.setText(Long.toString(matter.getId()));
+        String space = getResources().getString(R.string.matters_row_matter_id);
+        matterId.setText(String.format(space, matter.getId(), matter.getDescription()));
         clientName.setText(matter.getClientName());
-        matterName.setText(matter.getDescription());
         matterOpenDate.setText(matter.getOpenDate());
         matterStatus.setText(matter.getStatus());
     }

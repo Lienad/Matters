@@ -18,7 +18,7 @@ public class Matter implements Parcelable{
     String pending_date;
     String location;
     String client_reference;
-    String reponsible_attorney;
+    String responsible_attorney;
     String originating_attorney;
     String practice_area;
     boolean billable;
@@ -44,7 +44,7 @@ public class Matter implements Parcelable{
         pending_date = in.readString();
         location = in.readString();
         client_reference = in.readString();
-        reponsible_attorney = in.readString();
+        responsible_attorney = in.readString();
         originating_attorney = in.readString();
         practice_area = in.readString();
         billable = in.readByte() != 0;
@@ -105,7 +105,7 @@ public class Matter implements Parcelable{
         dest.writeString(pending_date);
         dest.writeString(location);
         dest.writeString(client_reference);
-        dest.writeString(reponsible_attorney);
+        dest.writeString(responsible_attorney);
         dest.writeString(originating_attorney);
         dest.writeString(practice_area);
         dest.writeInt(billable ? 1 : 0);

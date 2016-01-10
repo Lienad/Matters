@@ -4,4 +4,8 @@
     <string name="label_matter_details">Matter Details</string>
 
     <string name="matters_row_matter_id" formatted="false">%s - %s</string>
+    <string name="lable_matter_status">Status:</string>
+    <string name="label_matter_open_date">Open Date:</string>
+    <string name="label_client_name">Client:</string>
+    <string name="lablel_matter_id">Matter:</string>
 </resources>
