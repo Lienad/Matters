@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -84,8 +83,6 @@ public class MattersActivity extends AppCompatActivity {
 
            @Override
            public void onFailure(Throwable t) {
-               Log.e("TAG", "error: " + t.getMessage());
-               // TODO: handle the error
                retrieveMattersFromDb();
            }
        });
