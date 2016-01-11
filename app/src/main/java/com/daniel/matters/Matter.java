@@ -14,7 +14,9 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
  * Created by dabraham on 1/8/16.
  */
 @Table(database = MattersDatabase.class)
-public class Matter extends BaseModel implements Parcelable{
+public class Matter extends BaseModel implements Parcelable {
+
+    // TODO: add back in fields that were not working with retrofit
 
     @PrimaryKey()
     long id;
@@ -42,7 +44,6 @@ public class Matter extends BaseModel implements Parcelable{
     String billing_method;
     long group_id;
     Permission permission;
-
     //ActivityRate activity_rates;
 
     public Matter() {
@@ -218,8 +219,6 @@ public class Matter extends BaseModel implements Parcelable{
         }
     }
 
-
-
 //    public class ActivityRate {
 //        long id;
 //        String created_at;
@@ -240,6 +239,5 @@ public class Matter extends BaseModel implements Parcelable{
 //            String activity_description;
 //        }
 //    }
-
 
 }

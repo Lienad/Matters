@@ -9,7 +9,6 @@ import retrofit2.http.Headers;
  */
 public interface MattersApi {
 
-    //https://app.goclio.com/api/v2/matters`.
     @Headers({
             "Authorization: Bearer Xzd7LAtiZZ6HBBjx0DVRqalqN8yjvXgzY5qaD15a",
             "Content-Type: application/json",
