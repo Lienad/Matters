@@ -1,46 +1,49 @@
 package com.daniel.matters;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by dabraham on 1/8/16.
  */
-public class MattersAdapter extends ArrayAdapter<Matter> {
+public class MattersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    @Bind(R.id.matter_id)
-    TextView matterId;
+    private Context context;
+    private List<Matter> matters;
 
-    @Bind(R.id.matter_description)
-    TextView matterDescription;
-
-    public MattersAdapter(Context context, int resource, List<Matter> matters) {
-        super(context, resource, matters);
+    public MattersAdapter(Context context, List<Matter> matters) {
+        this.context = context;
+        this.matters = matters;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        Matter matter = getItem(position);
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_matters, parent, false);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_matters, null);
+
+        MatterViewHolder viewHolder = new MatterViewHolder(view);
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof MatterViewHolder) {
+            Matter matter = matters.get(position);
+            String space = context.getResources().getString(R.string.matters_row_matter_id);
+
+            ((MatterViewHolder) holder).setMatterIdText(String.format(space, matter.getId(), matter.getClientName()));
+            Log.e("TAG", "client: " + String.format(space, matter.getId(), matter.getClientName()));
+            ((MatterViewHolder) holder).setMatterDescriptionText(matter.getDescription());
         }
+    }
 
-        ButterKnife.bind(this, convertView);
-
-        String space = getContext().getResources().getString(R.string.matters_row_matter_id);
-
-        matterId.setText(String.format(space, matter.getId(), matter.getClientName()));
-        matterDescription.setText(matter.getDescription());
-
-        return convertView;
+    @Override
+    public int getItemCount() {
+        return matters.size();
     }
 }

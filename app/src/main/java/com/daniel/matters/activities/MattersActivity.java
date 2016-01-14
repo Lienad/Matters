@@ -3,10 +3,12 @@ package com.daniel.matters.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 
 import com.daniel.matters.Matter;
 import com.daniel.matters.MattersAdapter;
@@ -18,7 +20,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnItemClick;
 import retrofit2.Callback;
 
 public class MattersActivity extends AppCompatActivity {
@@ -27,13 +28,13 @@ public class MattersActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     @Bind(R.id.matters_list)
-    ListView mattersListView;
+    RecyclerView mattersRecyclerView;
 
-    @SuppressWarnings("unused")
-    @OnItemClick(R.id.matters_list) void showMatter(int position) {
-        Matter matter = adapter.getItem(position);
-        openMatterDetails(matter);
-    }
+//    @SuppressWarnings("unused")
+//    @OnItemClick(R.id.matters_list) void showMatter(int position) {
+//        Matter matter = adapter.(position);
+//        openMatterDetails(matter);
+//    }
 
     MattersAdapter adapter;
     private List<Matter> matters;
@@ -72,6 +73,7 @@ public class MattersActivity extends AppCompatActivity {
            public void onResponse(retrofit2.Response<MattersResponse> response) {
                if (response.body().matters != null) {
                    matters = response.body().matters;
+                   Log.e("TAG", "matters.size(): " + matters.size());
                    setupMattersList(response.body().matters);
                }
            }
@@ -85,8 +87,9 @@ public class MattersActivity extends AppCompatActivity {
 
     private void setupMattersList(List<Matter> matters) {
         this.matters = matters;
-        adapter = new MattersAdapter(this, R.layout.row_matters, matters);
-        mattersListView.setAdapter(adapter);
+        adapter = new MattersAdapter(this, matters);
+        mattersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mattersRecyclerView.setAdapter(adapter);
     }
 
     private void openMatterDetails(Matter matter) {
