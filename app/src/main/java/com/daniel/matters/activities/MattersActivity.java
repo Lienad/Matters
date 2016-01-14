@@ -1,7 +1,6 @@
 package com.daniel.matters.activities;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -47,7 +46,7 @@ public class MattersActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // TODO: display a progress bar while fetching the matters
-        getMattersAsync();
+        getMatters();
     }
 
     @Override
@@ -88,18 +87,6 @@ public class MattersActivity extends AppCompatActivity {
         this.matters = matters;
         adapter = new MattersAdapter(this, R.layout.row_matters, matters);
         mattersListView.setAdapter(adapter);
-    }
-
-    private void getMattersAsync() {
-        new GetMattersTask().execute();
-    }
-
-    public class GetMattersTask extends AsyncTask {
-        @Override
-        protected Object doInBackground(Object[] params) {
-            getMatters();
-            return null;
-        }
     }
 
     private void openMatterDetails(Matter matter) {
