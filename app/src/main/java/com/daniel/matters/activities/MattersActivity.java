@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -15,11 +14,13 @@ import com.daniel.matters.MattersAdapter;
 import com.daniel.matters.R;
 import com.daniel.matters.apis.ApiProvider;
 import com.daniel.matters.apis.MattersResponse;
+import com.daniel.matters.events.MatterItemClickEvent;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 import retrofit2.Callback;
 
 public class MattersActivity extends AppCompatActivity {
@@ -30,12 +31,6 @@ public class MattersActivity extends AppCompatActivity {
     @Bind(R.id.matters_list)
     RecyclerView mattersRecyclerView;
 
-//    @SuppressWarnings("unused")
-//    @OnItemClick(R.id.matters_list) void showMatter(int position) {
-//        Matter matter = adapter.(position);
-//        openMatterDetails(matter);
-//    }
-
     MattersAdapter adapter;
     private List<Matter> matters;
 
@@ -45,9 +40,15 @@ public class MattersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_matters);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-
+        EventBus.getDefault().register(this);
         // TODO: display a progress bar while fetching the matters
         getMatters();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -73,14 +74,13 @@ public class MattersActivity extends AppCompatActivity {
            public void onResponse(retrofit2.Response<MattersResponse> response) {
                if (response.body().matters != null) {
                    matters = response.body().matters;
-                   Log.e("TAG", "matters.size(): " + matters.size());
                    setupMattersList(response.body().matters);
                }
            }
 
            @Override
            public void onFailure(Throwable t) {
-               // TODO: handle the error
+               // todo: handle error
            }
        });
     }
@@ -96,5 +96,10 @@ public class MattersActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MatterDetailsActivity.class);
         intent.putExtra("matter", matter);
         startActivity(intent);
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(MatterItemClickEvent event) {
+        openMatterDetails(event.matter);
     }
 }
