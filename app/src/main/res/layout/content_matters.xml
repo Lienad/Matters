@@ -9,7 +9,7 @@
     tools:showIn="@layout/activity_matters"
     tools:context=".activities.MattersActivity">
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/matters_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
