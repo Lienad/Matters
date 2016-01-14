@@ -39,6 +39,7 @@ public class MattersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((MatterViewHolder) holder).setMatterIdText(String.format(space, matter.getId(), matter.getClientName()));
             Log.e("TAG", "client: " + String.format(space, matter.getId(), matter.getClientName()));
             ((MatterViewHolder) holder).setMatterDescriptionText(matter.getDescription());
+            ((MatterViewHolder) holder).setMatter(matter);
         }
     }
 
