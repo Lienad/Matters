@@ -2,7 +2,6 @@ package com.daniel.matters.db;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.daniel.matters.Matter;
 import com.daniel.matters.MattersApplication;
@@ -44,7 +43,6 @@ public class MatterDb {
         createBriteDbInstance();
 
         for (Matter matter : matters) {
-            Log.e("TAG", "insert matter " + matter.createContentValues());
             singleton.insert(MattersTable.TABLE_NAME, matter.createContentValues(), SQLiteDatabase.CONFLICT_REPLACE);
             singleton.insert(ClientTable.TABLE_NAME, matter.getClient().createContentValues(), SQLiteDatabase.CONFLICT_REPLACE);
         }
@@ -57,12 +55,10 @@ public class MatterDb {
                 + " INNER JOIN " + ClientTable.TABLE_NAME + " ON "
                 + matterQueryJoinOn() ;
 
-        Log.e("TAG", "query: " + query);
         return singleton.createQuery(MattersTable.TABLE_NAME, query)
                 .mapToList(new Func1< Cursor, Matter>() {
                     @Override
                     public Matter call(Cursor cursor) {
-                        Log.e("TAG", "got matter cursor");
                         return new Matter(cursor);
                     }
                 }).asObservable();

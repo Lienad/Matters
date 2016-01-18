@@ -152,6 +152,7 @@ public class MattersActivity extends AppCompatActivity {
             @Override
             public void onFailure(Throwable t) {
                 Log.e("TAG", "error getting matters from server: " + t.getMessage(), t);
+                loadMattersFromDb();
             }
         });
     }
