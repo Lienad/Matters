@@ -2,7 +2,6 @@ package com.daniel.matters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +41,6 @@ public class MattersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             String space = context.getResources().getString(R.string.matters_row_matter_id);
 
             ((MatterViewHolder) holder).setMatterIdText(String.format(space, matter.getId(), matter.getClientName()));
-            Log.e("TAG", "client: " + String.format(space, matter.getId(), matter.getClientName()));
             ((MatterViewHolder) holder).setMatterDescriptionText(matter.getDescription());
             ((MatterViewHolder) holder).setMatter(matter);
         }
