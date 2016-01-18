@@ -22,6 +22,11 @@ public class MattersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.matters = matters;
     }
 
+    public void updateData(List<Matter> matters) {
+        this.matters = matters;
+        notifyDataSetChanged();
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_matters, null);
