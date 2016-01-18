@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="preference_file_key">com.daniel.matters.PREFERENCE_FILE_KEY</string>
+
+    <integer name="matters_ttl">60</integer>
+    <string name="key_matters_last_update_time">matters_last_update_time</string>
+
+
+</resources>
