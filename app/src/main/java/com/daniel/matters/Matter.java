@@ -1,7 +1,12 @@
 package com.daniel.matters;
 
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.daniel.matters.db.ClientTable;
+import com.daniel.matters.db.MattersTable;
 
 /**
  * Created by dabraham on 1/8/16.
@@ -31,6 +36,13 @@ public class Matter implements Parcelable{
     Permission permission;
     //ActivityRate activity_rates;
 
+    public Matter(Cursor cursor) {
+        id = cursor.getLong(cursor.getColumnIndex(MattersTable.Column.id.name()));
+        description = cursor.getString(cursor.getColumnIndex(MattersTable.Column.description.name()));
+        open_date = cursor.getString(cursor.getColumnIndex(MattersTable.Column.open_date.name()));
+        status = cursor.getString(cursor.getColumnIndex(MattersTable.Column.status.name()));
+        client = new Client(cursor);
+    }
 
     protected Matter(Parcel in) {
         id = in.readLong();
@@ -87,6 +99,11 @@ public class Matter implements Parcelable{
         return status;
     }
 
+    public Client getClient() {
+        return client;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -114,6 +131,16 @@ public class Matter implements Parcelable{
         dest.writeString(billing_method);
         dest.writeLong(group_id);
         dest.writeParcelable(permission, 0);
+    }
+
+    public ContentValues createContentValues() {
+        ContentValues values = new ContentValues();
+        values.put(MattersTable.Column.id.name(), id);
+        values.put(MattersTable.Column.description.name(), description);
+        values.put(MattersTable.Column.open_date.name(), open_date);
+        values.put(MattersTable.Column.status.name(), status);
+        values.put(MattersTable.Column.client_id.name(), client.id);
+        return values;
     }
 
     public static class Permission implements Parcelable {
@@ -157,6 +184,12 @@ public class Matter implements Parcelable{
         String url;
         String name;
 
+        public Client(Cursor cursor) {
+            id = cursor.getLong(cursor.getColumnIndex(MattersTable.Column.client_id.name()));
+            name = cursor.getString(cursor.getColumnIndex(ClientTable.Column.name.name()));
+            url = cursor.getString(cursor.getColumnIndex(ClientTable.Column.url.name()));
+        }
+
         protected Client(Parcel in) {
             id = in.readLong();
             url = in.readString();
@@ -185,6 +218,14 @@ public class Matter implements Parcelable{
             dest.writeLong(id);
             dest.writeString(url);
             dest.writeString(name);
+        }
+
+        public ContentValues createContentValues() {
+            ContentValues values = new ContentValues();
+            values.put(ClientTable.Column.id.name(), id);
+            values.put(ClientTable.Column.url.name(), url);
+            values.put(ClientTable.Column.name.name(), name);
+            return values;
         }
     }
 
